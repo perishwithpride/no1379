@@ -15,9 +15,6 @@
 <li>记录学习笔记</li>
 <li>撰写生活随笔</li>
 </ul>
-<blockquote>
-<p>Stay Hungry, Stay Foolish.</p>
-</blockquote>
 ]]></content>
       <categories>
         <category>技术</category>
@@ -25,6 +22,185 @@
       <tags>
         <tag>Hexo</tag>
         <tag>博客</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>0基础用Vibe Coding创建个人网站全记录</title>
+    <url>/no1379/vibe-coding-personal-website/</url>
+    <content><![CDATA[<h2 id="什么是-Vibe-Coding"><a href="#什么是-Vibe-Coding" class="headerlink" title="什么是 Vibe Coding"></a>什么是 Vibe Coding</h2><p>注：本文大部分由ai撰写，仅作技术分享使用，文章的ai味儿不代表作者态度，请读者自行甄别。</p>
+<p>Vibe Coding 不是写代码，是描述你想要的东西，AI 帮你实现。不需要懂编程语言，但需要能说清楚”我想要什么”——剩下的交给 AI。</p>
+<p>本文记录用 Hexo + Butterfly 主题搭建个人博客的全过程，从零到上线。</p>
+<hr>
+<h2 id="一、开始之前：先选工具链"><a href="#一、开始之前：先选工具链" class="headerlink" title="一、开始之前：先选工具链"></a>一、开始之前：先选工具链</h2><p>开始之前，先搞清楚几个东西分别是什么、怎么装。</p>
+<hr>
+<h3 id="VS-Code"><a href="#VS-Code" class="headerlink" title="VS Code"></a>VS Code</h3><p>整个建站过程首先需要一个开发环境，我用 VS Code。</p>
+<p>VS Code（Visual Studio Code）是微软出的免费代码编辑器，应该是目前最流行的编辑器之一。<strong>去 <a href="https://code.visualstudio.com/">https://code.visualstudio.com</a> 下载安装即可</strong>，一路点下一步，不需要任何特殊配置。装好之后打开是一个窗口，左边是文件列表，右边是编辑区。</p>
+<hr>
+<h3 id="Claude-Code"><a href="#Claude-Code" class="headerlink" title="Claude Code"></a>Claude Code</h3><p>Claude Code 是 Anthropic 公司出的终端原生 AI Agent。它跟 ChatGPT 的区别在于：ChatGPT 只能对话，Claude Code 能直接读写你的文件、执行终端命令、一条龙地完成”创建项目 → 装依赖 → 改配置 → 部署上线”这种完整任务。直接在vs code的扩展商店里搜索Claude即可。</p>
+<p>也可以安装命令行版本，打开 VS Code 的终端，输入：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install -g @anthropic-ai/claude-code</span><br></pre></td></tr></table></figure>
+
+<p>一行命令，装完就能用了。之后在终端输入 <code>claude</code> 启动，或在 VS Code 里呼出它的对话面板，直接打字提需求。</p>
+<p>Claude Code 的默认模型是 Claude Sonnet（付费 API），需要绑定 Anthropic 账号和 API Key。</p>
+<hr>
+<h3 id="cc-switch"><a href="#cc-switch" class="headerlink" title="cc-switch"></a>cc-switch</h3><p>如果你不想只用 Anthropic 的付费 API，有一个叫 <strong>cc-switch</strong> 的小工具可以一键切换 Claude Code 背后调用的模型。比如你搞到了更便宜的 DeepSeek API Key，用 cc-switch 切过去，Claude Code 的工作方式不变，但背后干活的是 DeepSeek 模型。对于预算有限的个人用户很实用。</p>
+<hr>
+<h3 id="DeepSeek"><a href="#DeepSeek" class="headerlink" title="DeepSeek"></a>DeepSeek</h3><p><strong>DeepSeek</strong> 是目前api性价比最高的模型。去 <strong>platform.deepseek.com</strong> 注册账号，在”API Keys”页面创建一个 Key，复制下来。然后配合 cc-switch 填入 Claude Code，或者填进 Cursor 等工具里，就能用。</p>
+<hr>
+<h3 id="其他免费选项"><a href="#其他免费选项" class="headerlink" title="其他免费选项"></a>其他免费选项</h3><ul>
+<li><strong>Cursor</strong>：一款独立的 AI 编程编辑器（基于 VS Code 改造），每月有免费 API 额度，适合不想折腾 API Key 的用户。</li>
+<li><strong>Trae</strong>：字节跳动出的 AI Agent 应用，也有免费额度，国内网络友好。</li>
+</ul>
+<h2 id="这些工具原理都一样——你把需求说清楚，它帮你改文件、跑命令。"><a href="#这些工具原理都一样——你把需求说清楚，它帮你改文件、跑命令。" class="headerlink" title="这些工具原理都一样——你把需求说清楚，它帮你改文件、跑命令。"></a>这些工具原理都一样——你把需求说清楚，它帮你改文件、跑命令。</h2><h3 id="静态网站生成器是什么"><a href="#静态网站生成器是什么" class="headerlink" title="静态网站生成器是什么"></a>静态网站生成器是什么</h3><p>简单说，你写 Markdown，它帮你生成一整个 HTML 网站。类比一下：你在 Word 里写文档，点一下”导出为网页”，整个排版、导航、样式都自动搞定。Hexo 就是这个”导出”工具，Butterfly 是其中一套很漂亮的排版模板。</p>
+<p>选 Hexo + Butterfly 主要因为：Node.js 生态一条龙（装东西全靠 npm）、中文社区活跃文档不愁、Butterfly 主题功能全（暗黑模式、搜索、评论、代码高亮都是现成的）。</p>
+<hr>
+<h2 id="二、环境这关怎么过"><a href="#二、环境这关怎么过" class="headerlink" title="二、环境这关怎么过"></a>二、环境这关怎么过</h2><p>很多人卡在环境配置上。其实用 Vibe Coding 的方式，你根本不需要手动装任何东西。</p>
+<p>直接对 AI 说一句话就够了：</p>
+<blockquote>
+<p>“帮我用 Hexo 和 Butterfly 做个个人网站”</p>
+</blockquote>
+<p>AI 会自动检测你电脑上有没有 Node.js——没有就让你装，或者直接给你命令。Node.js 可以理解为”运行 JavaScript 的环境”，npm 是”全世界的代码库，免费拿来用”。这两句差不多就是你需要知道的全部背景知识了。</p>
+<p>过程中 AI 会在命令行里跑很多命令，比如 <code>npm install</code> 会刷一屏幕的进度条。不用担心，它只是在下东西。命令行和 Windows 的图形界面本质上是同一台电脑的两种操作方式——一个靠鼠标点点点，一个靠键盘敲字。用 Vibe Coding 的话，敲字的事都交给 AI，你看它跑就行。</p>
+<p>如果中途红了、报错了、卡住了——把那段红色的报错信息原样复制，丢回给 AI。绝大多数时候它能自己看懂并修复，如果不行就换个ai。这也是 Vibe Coding 的核心循环：你说需求 → AI 动手 → 出错 → 把错丢回去 → 修好继续。</p>
+<hr>
+<h2 id="三、网站雏形诞生：从一句命令到一个页面"><a href="#三、网站雏形诞生：从一句命令到一个页面" class="headerlink" title="三、网站雏形诞生：从一句命令到一个页面"></a>三、网站雏形诞生：从一句命令到一个页面</h2><p>AI 跑完 <code>hexo init</code> 之后，项目的文件夹里会出现这些东西：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">├── _config.yml           # 网站的&quot;身份证&quot;</span><br><span class="line">├── _config.butterfly.yml # 外观的&quot;开关面板&quot;</span><br><span class="line">├── source/</span><br><span class="line">│   ├── _posts/           # 文章放这里</span><br><span class="line">│   ├── about/            # 关于页</span><br><span class="line">│   └── img/              # 图片资源</span><br><span class="line">├── themes/               # 皮肤文件夹</span><br><span class="line">├── public/               # 生成的成品网页（不用手动管）</span><br><span class="line">└── package.json          # 项目用了哪些包</span><br></pre></td></tr></table></figure>
+
+<p>改这个网站，主要改的其实就两个文件：</p>
+<p><code>_config.yml</code> 管<strong>网站本身</strong>——标题叫什么、作者是谁、网址是多少、语言是什么、部署到哪里。它是网站的身份证。</p>
+<p><code>_config.butterfly.yml</code> 管<strong>网站外观</strong>——导航栏放哪些菜单、侧边栏要不要、搜索开不开、评论用哪个、暗黑模式要不要。它像一个开关面板，你想开什么功能，就在里面找到对应的选项，把 <code>false</code> 改 <code>true</code>。</p>
+<p>其他的文件你不用手动去碰。想改什么东西的时候，直接问 AI 就行：”帮我把导航栏改成中文””帮我加个本地搜索””帮我把头像旋转效果关掉”。它知道该在哪个文件改哪个参数。</p>
+<hr>
+<h3 id="主题配置是怎么工作的"><a href="#主题配置是怎么工作的" class="headerlink" title="主题配置是怎么工作的"></a>主题配置是怎么工作的</h3><p>Butterfly 主题自己带了一套默认配置（在 <code>node_modules/hexo-theme-butterfly/_config.yml</code> 里），你不要去改它。你在项目根目录写的 <code>_config.butterfly.yml</code>，相当于只覆盖你想改的部分。好比默认是蓝色的墙，你告诉 AI “帮我把墙刷成白色”，它只动墙的颜色，其他不动。</p>
+<p>这个设计很关键——意味着你不需要从零开始填几百行配置，你只需要写你关心的那几项。</p>
+<hr>
+<h3 id="front-matter：文章的身份证"><a href="#front-matter：文章的身份证" class="headerlink" title="front-matter：文章的身份证"></a>front-matter：文章的身份证</h3><p>每篇文章的顶部，被 <code>---</code> 包起来的那段，叫 front-matter：</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 文章标题</span><br><span class="line">date: 2026-05-16 12:00:00</span><br><span class="line">categories:</span><br><span class="line"><span class="bullet">  -</span> 技术</span><br><span class="line">tags:</span><br><span class="line"><span class="bullet">  -</span> Hexo</span><br><span class="line"><span class="section">  - 博客</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line">正文从这里开始...</span><br></pre></td></tr></table></figure>
+
+<p>它告诉 Hexo：这篇文章叫什么、什么时候写的、属于哪个分类、打了什么标签。分类和标签会影响文章出现在哪个分类页和标签页里。</p>
+<hr>
+<h2 id="四、部署上线：从本地文件到公网-URL"><a href="#四、部署上线：从本地文件到公网-URL" class="headerlink" title="四、部署上线：从本地文件到公网 URL"></a>四、部署上线：从本地文件到公网 URL</h2><h3 id="本地预览"><a href="#本地预览" class="headerlink" title="本地预览"></a>本地预览</h3><p>部署之前，先在本地看一眼效果：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx hexo server</span><br></pre></td></tr></table></figure>
+
+<p>浏览器打开 <code>http://localhost:4000</code>，看到的就是最终上线后的样子。改配置、改文章之后也可以先本地看看再部署，出错了不丢人。端口占用了换个数字就行，比如 <code>npx hexo server -p 4005</code>。</p>
+<hr>
+<h3 id="GitHub-Pages-部署"><a href="#GitHub-Pages-部署" class="headerlink" title="GitHub Pages 部署"></a>GitHub Pages 部署</h3><p>GitHub Pages 是 GitHub 提供的免费静态网页托管服务。你把 HTML 文件放在仓库里，它就自动给你一个公网网址。</p>
+<p>拿它和传统的买服务器建站比一下：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>GitHub Pages</th>
+<th>买服务器（VPS&#x2F;云服务器）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>费用</td>
+<td>免费</td>
+<td>每月几十到几百不等</td>
+</tr>
+<tr>
+<td>维护</td>
+<td>零维护，GitHub 帮你管</td>
+<td>需要自己装系统、配环境、打补丁</td>
+</tr>
+<tr>
+<td>速度</td>
+<td>CDN 全球加速</td>
+<td>看机房位置和带宽</td>
+</tr>
+<tr>
+<td>适合什么</td>
+<td>静态网站（博客、文档站、作品集）</td>
+<td>动态网站（需要数据库、用户登录等）</td>
+</tr>
+<tr>
+<td>上线流程</td>
+<td>推代码 → 自动部署</td>
+<td>SSH 登录 → 装 Nginx → 上传文件 → 配域名 → 配 SSL</td>
+</tr>
+</tbody></table>
+<p>对于一个个人博客，GitHub Pages 完全够用了。它唯一的限制是只能托管静态文件——HTML、CSS、JS、图片——不能跑 PHP、Python 之类的后端程序。但 Hexo 生成的恰好就是纯静态网站，所以完美匹配。</p>
+<hr>
+<h3 id="传统服务器建站是怎样的（简短对比）"><a href="#传统服务器建站是怎样的（简短对比）" class="headerlink" title="传统服务器建站是怎样的（简短对比）"></a>传统服务器建站是怎样的（简短对比）</h3><p>如果你买一台云服务器，比如阿里云或腾讯云最低配的 ECS，典型的建站流程大概是：</p>
+<ol>
+<li>SSH 登录服务器，装 Nginx：<code>apt install nginx</code></li>
+<li>把本地生成的 HTML 上传到服务器：<code>scp -r public/* user@服务器IP:/var/www/html/</code></li>
+<li>配置 Nginx 的站点文件，指定域名和根目录</li>
+<li>去域名服务商配置 DNS，把域名 A 记录指向服务器 IP</li>
+<li>用 Let’s Encrypt 申请免费 SSL 证书，配置 HTTPS</li>
+<li>设置 Nginx 开机自启、定时更新证书</li>
+</ol>
+<p>这还只是最简版本。实际你还得操心服务器安全（改 SSH 端口、配防火墙、禁止 root 登录）、监控资源占用、处理流量峰值。个人博客这种场景，为这些事花时间不太划算。GitHub Pages 把这些全免了。</p>
+<hr>
+<h3 id="部署步骤"><a href="#部署步骤" class="headerlink" title="部署步骤"></a>部署步骤</h3><p>Hexo 部署到 GitHub Pages，一般有两种方式。最常用的是<strong>推到 <code>main</code> 分支</strong>——如果你用的是 <code>用户名.github.io</code> 这种用户主站仓库，GitHub Pages 默认就是从 <code>main</code> 发布。如果是项目仓库（<code>用户名.github.io/仓库名</code>），一般也直接推到 <code>main</code> 就行。</p>
+<p>具体步骤：</p>
+<ol>
+<li>在 GitHub 新建仓库。如果用 <code>用户名.github.io</code> 命名，自动开启 Pages。</li>
+<li>在 <code>_config.yml</code> 配置部署：</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">git@github.com:你的用户名/仓库名.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>本地生成并部署：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx hexo clean &amp;&amp; npx hexo generate &amp;&amp; npx hexo deploy</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>去仓库 Settings → Pages，确认 Branch 选的是 <code>main</code>，点 Save。等一分钟，网站上线。</li>
+</ol>
+<hr>
+<h3 id="SSH-密钥：为什么需要它、怎么配"><a href="#SSH-密钥：为什么需要它、怎么配" class="headerlink" title="SSH 密钥：为什么需要它、怎么配"></a>SSH 密钥：为什么需要它、怎么配</h3><p><code>hexo deploy</code> 用 Git 协议推送代码，需要 SSH 密钥来认证身份。如果你已经能用 <code>git push</code> 正常推送 GitHub 仓库，说明密钥已经配好了，跳过这步就行。</p>
+<p>如果还没配过：</p>
+<ol>
+<li>打开终端，生成密钥（一路回车）：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t ed25519 -C <span class="string">&quot;你的邮箱@example.com&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>复制公钥：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> ~/.ssh/id_ed25519.pub</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>打开 GitHub → Settings → SSH and GPG keys → New SSH key，把复制的内容粘贴进去。</p>
+</li>
+<li><p>测试是否成功：</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p>看到 <code>Hi 你的用户名!</code> 就说明配好了。之后 <code>hexo deploy</code> 推送时不再需要输密码。</p>
+<hr>
+<h3 id="加评论系统"><a href="#加评论系统" class="headerlink" title="加评论系统"></a>加评论系统</h3><p>评论我选的是 <strong>Giscus</strong>。它本质上是把 GitHub Discussions 当成评论数据库——读者在文章下面留言，内容实际存在仓库的 Discussions 里。好处是完全免费、没有广告、不需要自己搭后端。</p>
+<p>配置步骤：</p>
+<ol>
+<li>打开 <a href="https://giscus.app/">giscus.app</a>，填你的仓库名</li>
+<li>页面自动生成一段配置，里面有 <code>data-repo-id</code> 和 <code>data-category-id</code></li>
+<li>把这两串 ID 复制给 AI，说”帮我填进 Giscus 配置”</li>
+<li>AI 会在 <code>_config.butterfly.yml</code> 里填好：</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">comments:</span></span><br><span class="line">  <span class="attr">use:</span> <span class="string">Giscus</span></span><br><span class="line"><span class="attr">giscus:</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">你的用户名/你的仓库</span></span><br><span class="line">  <span class="attr">repo_id:</span> <span class="string">&#x27;R_kgDOxxxxxx&#x27;</span></span><br><span class="line">  <span class="attr">category:</span> <span class="string">Announcements</span></span><br><span class="line">  <span class="attr">category_id:</span> <span class="string">&#x27;DIC_kwDOxxxxxx&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>注意，你的仓库需要是公开的，并且开启了 Discussions 功能（Settings → 勾选 Discussions）。部署完成后，每篇文章底部就会出现评论区。</p>
+<hr>
+<h2 id="五、日常写作：发布一篇文章要几步"><a href="#五、日常写作：发布一篇文章要几步" class="headerlink" title="五、日常写作：发布一篇文章要几步"></a>五、日常写作：发布一篇文章要几步</h2><p>建好之后，日常写文章的流程非常简单：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 1. 创建新文章</span></span><br><span class="line">npx hexo new <span class="string">&quot;我的新文章&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 用编辑器打开 source/_posts/我的新文章.md，写内容</span></span><br><span class="line"><span class="comment">#    改一下顶部的 categories 和 tags</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 部署</span></span><br><span class="line">npx hexo clean &amp;&amp; npx hexo generate &amp;&amp; npx hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>一分钟左右，新文章就上线了。让ai发也行。</p>
+<p>源代码——Markdown 文件、配置——都留在本地就好，不用额外 <code>git push</code>。只有 <code>hexo deploy</code> 那次会把生成的 HTML 推上 GitHub。哪天换电脑了，把本地的源码文件夹拷过去，跑一下 <code>npm install</code> 就能继续写。</p>
+<hr>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>这次建站，从头到尾我没写过一行 HTML 或 CSS。每一次改动都是”帮我把 XXX 改成 YYY”、”为什么 XXX 一直转圈”、”怎么加搜索”——描述问题，AI 动手。这就是 Vibe Coding 的核心：你把精力花在”想要什么”上，而不是”怎么写出来”上。</p>
+<p>网站上线只是第一步。后面慢慢加文章、改样式、加新功能，每一次都是一次小的 Vibe Coding 循环。</p>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>Butterfly</tag>
+        <tag>GitHub Pages</tag>
+        <tag>Vibe Coding</tag>
       </tags>
   </entry>
 </search>
