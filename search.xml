@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>叫爸爸</title>
+    <url>/no1379/hello-dad/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/no1379/hello-world/</url>
+    <content><![CDATA[<p>欢迎来到我的个人博客！这是使用 <strong>Hexo</strong> + <strong>Butterfly</strong> 主题搭建的第一篇文章。</p>
+<h2 id="关于本站"><a href="#关于本站" class="headerlink" title="关于本站"></a>关于本站</h2><p>这个网站使用以下技术栈构建：</p>
+<ul>
+<li><strong>Hexo</strong> - 快速、简洁且高效的静态博客框架</li>
+<li><strong>Butterfly</strong> - 美观、功能丰富的 Hexo 主题</li>
+<li><strong>Markdown</strong> - 优雅的写作体验</li>
+</ul>
+<h2 id="后续计划"><a href="#后续计划" class="headerlink" title="后续计划"></a>后续计划</h2><ul>
+<li>分享技术文章和开发经验</li>
+<li>记录学习笔记</li>
+<li>撰写生活随笔</li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>博客</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>0基础用Vibe Coding创建个人网站全记录</title>
     <url>/no1379/vibe-coding-personal-website/</url>
     <content><![CDATA[<blockquote>
@@ -179,30 +211,6 @@
         <tag>Butterfly</tag>
         <tag>GitHub Pages</tag>
         <tag>Vibe Coding</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/no1379/hello-world/</url>
-    <content><![CDATA[<p>欢迎来到我的个人博客！这是使用 <strong>Hexo</strong> + <strong>Butterfly</strong> 主题搭建的第一篇文章。</p>
-<h2 id="关于本站"><a href="#关于本站" class="headerlink" title="关于本站"></a>关于本站</h2><p>这个网站使用以下技术栈构建：</p>
-<ul>
-<li><strong>Hexo</strong> - 快速、简洁且高效的静态博客框架</li>
-<li><strong>Butterfly</strong> - 美观、功能丰富的 Hexo 主题</li>
-<li><strong>Markdown</strong> - 优雅的写作体验</li>
-</ul>
-<h2 id="后续计划"><a href="#后续计划" class="headerlink" title="后续计划"></a>后续计划</h2><ul>
-<li>分享技术文章和开发经验</li>
-<li>记录学习笔记</li>
-<li>撰写生活随笔</li>
-</ul>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-        <tag>博客</tag>
       </tags>
   </entry>
 </search>
