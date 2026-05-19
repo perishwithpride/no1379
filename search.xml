@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>叫爸爸</title>
-    <url>/no1379/hello-dad/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
-  </entry>
-  <entry>
     <title>Hello World</title>
     <url>/no1379/hello-world/</url>
     <content><![CDATA[<p>欢迎来到我的个人博客！这是使用 <strong>Hexo</strong> + <strong>Butterfly</strong> 主题搭建的第一篇文章。</p>
@@ -31,6 +23,14 @@
         <tag>Hexo</tag>
         <tag>博客</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>叫爸爸</title>
+    <url>/no1379/hello-dad/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
   </entry>
   <entry>
     <title>0基础用Vibe Coding创建个人网站全记录</title>
